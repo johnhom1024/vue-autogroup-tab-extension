@@ -3,6 +3,7 @@
   "manifest_version": 3,
   "description": "vue3版本的chrome插件",
   "version": "1.0.0",
+  "permissions": ["storage", "tabs", "tabGroups"],
   "background": {
     "service_worker": "js/background.js"
   },
