@@ -5,7 +5,7 @@ import {
   NEW_TAB_URL,
 } from '@/utils/constant';
 
-import { DomainStrategy } from '@/utils/Strategy';
+import { DomainGroupStrategy } from '@/utils/Strategy';
 
 
 // 是否在分组中
@@ -50,14 +50,16 @@ async function groupTabs(tab: TabType) {
   }
   try {
     isGrouping = true;
-    const tabs = await DomainStrategy.querySameTabs(tab);
+    const tabs = await DomainGroupStrategy.querySameTabs(tab);
     const tabIds = tabs
       .map((t) => t.id)
       .filter((t) => !!t) as number[];
 
     console.log('----------johnhomLogDebug tabIds', tabIds)
 
-    const groupTitle = DomainStrategy.getGroupTitle(tab);
+    // 这里tabs可能会是0
+
+    const groupTitle = DomainGroupStrategy.getGroupTitle(tab);
 
     if (groupTitle) {
       await chrome.tabGroups
