@@ -3,16 +3,22 @@ import {
   TabType,
   TabStatus,
   NEW_TAB_URL,
+  DEFAULT_CONFIG,
 } from '@/utils/constant';
 
 import { DomainGroupStrategy } from '@/utils/Strategy';
-
+import { chromeStorageGet } from '@/utils/index';
 
 // 是否在分组中
 let isGrouping = false;
 
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
-  console.log('----------johnhomLogDebug 更新了tab', tab);
+  const config = await chromeStorageGet(Object.keys(DEFAULT_CONFIG));
+  const userConfig = { ...DEFAULT_CONFIG, ...config };
+  // 判断是否开启了自动分组
+  if (!userConfig.enableAutoGroup) {
+    return;
+  }
   // 如果 tab 还未加载完，则不执行
   if (tab.status !== TabStatus.COMPETED) {
     return;
@@ -32,6 +38,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     if (tabGroups && tabGroups.length) {
       chrome.tabs.group({ tabIds: tab.id, groupId: tabGroups[0].id });
     } else {
+      console.log('----------johnhomLogDebug tabId', tab.id)
       const groupId = await chrome.tabs.group({ tabIds: tab.id });
       chrome.tabGroups.update(groupId, { title: NEW_TAB_GROUP_TITLE });
     }
@@ -55,8 +62,6 @@ async function groupTabs(tab: TabType) {
       .map((t) => t.id)
       .filter((t) => !!t) as number[];
 
-    console.log('----------johnhomLogDebug tabIds', tabIds)
-
     // 这里tabs可能会是0
 
     const groupTitle = DomainGroupStrategy.getGroupTitle(tab);
@@ -70,11 +75,9 @@ async function groupTabs(tab: TabType) {
         .then((tabGroups) => {
           if (tabGroups && tabGroups.length > 0) {
             chrome.tabs.group({ tabIds, groupId: tabGroups[0].id });
-            console.log('----------johnhomLogDebug 组成了一个标签组', groupTitle);
           } else {
             chrome.tabs.group({ tabIds }).then((groupId) => {
               chrome.tabGroups.update(groupId, { title: groupTitle });
-              console.log('----------johnhomLogDebug 新建了一个标签组', groupTitle);
             });
           }
         });
@@ -85,3 +88,22 @@ async function groupTabs(tab: TabType) {
     isGrouping = false;
   }
 }
+
+
+// 监听storage的变化
+chrome.storage.onChanged.addListener((changes, areaName) => {
+  console.log('----------johnhomLogDebug changes', changes)
+  console.log('----------johnhomLogDebug areaName', areaName)
+});
+
+
+chrome.runtime.onMessage.addListener((request) => {
+  console.log('----------johnhomLogDebug request', request)
+  
+  // if (request.groupRightNow) {
+  //   chrome.storage.sync.get(Object.keys(DEFAULT_CONFIG), (config) => {
+  //     userConfig = { ...DEFAULT_CONFIG, ...config };
+  //     groupAllTabs();
+  //   });
+  // }
+});

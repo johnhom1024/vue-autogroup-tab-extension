@@ -10,3 +10,9 @@ export enum TabStatus {
   COMPETED = 'complete',
   PENDING = 'pending',
 } 
+
+// 默认配置
+export const DEFAULT_CONFIG = {
+  // 是否启用标签自动分组
+  enableAutoGroup: true,
+}
