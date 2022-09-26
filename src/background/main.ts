@@ -11,10 +11,11 @@ import { chromeStorageGet } from '@/utils/index';
 
 // 是否在分组中
 let isGrouping = false;
+let userConfig = {} as typeof DEFAULT_CONFIG;
 
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   const config = await chromeStorageGet(Object.keys(DEFAULT_CONFIG));
-  const userConfig = { ...DEFAULT_CONFIG, ...config };
+  userConfig = { ...DEFAULT_CONFIG, ...config };
   // 判断是否开启了自动分组
   if (!userConfig.enableAutoGroup) {
     return;
@@ -38,7 +39,6 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     if (tabGroups && tabGroups.length) {
       chrome.tabs.group({ tabIds: tab.id, groupId: tabGroups[0].id });
     } else {
-      console.log('----------johnhomLogDebug tabId', tab.id)
       const groupId = await chrome.tabs.group({ tabIds: tab.id });
       chrome.tabGroups.update(groupId, { title: NEW_TAB_GROUP_TITLE });
     }
@@ -62,7 +62,13 @@ async function groupTabs(tab: TabType) {
       .map((t) => t.id)
       .filter((t) => !!t) as number[];
 
-    // 这里tabs可能会是0
+    // 如果tab数量不满足tab组的最低数量要求，则ungroup
+    if (tabs.length < userConfig.minGroupTabNum) {
+      if (tabIds.length) {
+        chrome.tabs.ungroup(tabIds);
+      }
+      return;
+    }
 
     const groupTitle = DomainGroupStrategy.getGroupTitle(tab);
 

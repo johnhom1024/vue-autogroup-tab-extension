@@ -10,6 +10,14 @@
     </div>
     <a-divider style="margin: 0"></a-divider>
     <div class="p-[10px]">
+      <a-form>
+        <a-form-item label="每个分组的最小Tab数量">
+          <a-input-number :value="state.config.minGroupTabNum" @change="onMinGroupTabNumChange"></a-input-number>
+        </a-form-item>
+      </a-form>
+    </div>
+    <a-divider style="margin: 0"></a-divider>
+    <div class="p-[10px]">
       <a-button type="primary">一键分组</a-button>
     </div>
   </div>
@@ -37,10 +45,16 @@ function onEnableAutoGroupChange(value: boolean) {
   chromeStorageSet({ enableAutoGroup: value });
 }
 
+function onMinGroupTabNumChange(value: number) {
+  state.config.minGroupTabNum = value;
+  chromeStorageSet({ minGroupTabNum: value });
+}
+
 // 初始化state
 async function initState() {
   const config = (await chromeStorageGet(Object.keys(DEFAULT_CONFIG))) as ConfigType;
-  state.config = config;
+  state.config = { ...DEFAULT_CONFIG, ...config};
+  chromeSendMessage(config);
 }
 
 onBeforeMount(() => {

@@ -15,4 +15,6 @@ export enum TabStatus {
 export const DEFAULT_CONFIG = {
   // 是否启用标签自动分组
   enableAutoGroup: true,
+  // 一个标签组至少需要的标签数
+  minGroupTabNum: 2,
 }
