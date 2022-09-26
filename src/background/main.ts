@@ -4,10 +4,17 @@ import {
   TabStatus,
   NEW_TAB_URL,
   DEFAULT_CONFIG,
+  DomainStrategyTypeDef,
 } from '@/utils/constant';
 
-import { DomainGroupStrategy } from '@/utils/Strategy';
+import { DomainGroupStrategy, FirstDomainStrategy } from '@/utils/Strategy';
 import { chromeStorageGet } from '@/utils/index';
+
+// 定义域名策略的方法
+const DOMAIN_STRATEGY_MAP = new Map();
+DOMAIN_STRATEGY_MAP.set(DomainStrategyTypeDef.DOMAIN, DomainGroupStrategy);
+DOMAIN_STRATEGY_MAP.set(DomainStrategyTypeDef.FIRST_DOMAIN, FirstDomainStrategy);
+
 
 // 是否在分组中
 let isGrouping = false;
@@ -55,9 +62,11 @@ async function groupTabs(tab: TabType) {
   if (isGrouping) {
     return;
   }
+
+  const strategy = DOMAIN_STRATEGY_MAP.get(userConfig.domainGroupType);
   try {
     isGrouping = true;
-    const tabs = await DomainGroupStrategy.querySameTabs(tab);
+    const tabs = await strategy.querySameTabs(tab);
     const tabIds = tabs
       .map((t) => t.id)
       .filter((t) => !!t) as number[];
@@ -70,7 +79,7 @@ async function groupTabs(tab: TabType) {
       return;
     }
 
-    const groupTitle = DomainGroupStrategy.getGroupTitle(tab);
+    const groupTitle = strategy.getGroupTitle(tab);
 
     if (groupTitle) {
       await chrome.tabGroups
