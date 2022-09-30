@@ -11,7 +11,7 @@ import { DomainGroupStrategy, FirstDomainStrategy } from '@/utils/Strategy';
 import { chromeStorageGet } from '@/utils/index';
 
 // 定义域名策略的方法
-const DOMAIN_STRATEGY_MAP = new Map();
+const DOMAIN_STRATEGY_MAP:Map<DomainStrategyTypeDef, DomainGroupStrategy | FirstDomainStrategy> = new Map();
 DOMAIN_STRATEGY_MAP.set(DomainStrategyTypeDef.DOMAIN, DomainGroupStrategy);
 DOMAIN_STRATEGY_MAP.set(DomainStrategyTypeDef.FIRST_DOMAIN, FirstDomainStrategy);
 
@@ -28,7 +28,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     return;
   }
   // 如果 tab 还未加载完，则不执行
-  if (tab.status !== TabStatus.COMPETED) {
+  if (!changeInfo.url) {
     return;
   }
 
@@ -54,7 +54,8 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   }
 
   // 如果不是新标签页
-  groupTabs(tab);
+  await groupTabs(tab);
+  // 如果有tab从分组中移除
 });
 
 // 将相同的tabs组成一个标签页
@@ -64,6 +65,9 @@ async function groupTabs(tab: TabType) {
   }
 
   const strategy = DOMAIN_STRATEGY_MAP.get(userConfig.domainGroupType);
+  if (!strategy) {
+    return;
+  }
   try {
     isGrouping = true;
     const tabs = await strategy.querySameTabs(tab);
