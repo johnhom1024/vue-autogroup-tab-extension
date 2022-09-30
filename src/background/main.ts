@@ -11,10 +11,15 @@ import { DomainGroupStrategy, FirstDomainStrategy } from '@/utils/Strategy';
 import { chromeStorageGet } from '@/utils/index';
 
 // 定义域名策略的方法
-const DOMAIN_STRATEGY_MAP:Map<DomainStrategyTypeDef, DomainGroupStrategy | FirstDomainStrategy> = new Map();
+const DOMAIN_STRATEGY_MAP: Map<
+  DomainStrategyTypeDef,
+  DomainGroupStrategy | FirstDomainStrategy
+> = new Map();
 DOMAIN_STRATEGY_MAP.set(DomainStrategyTypeDef.DOMAIN, DomainGroupStrategy);
-DOMAIN_STRATEGY_MAP.set(DomainStrategyTypeDef.FIRST_DOMAIN, FirstDomainStrategy);
-
+DOMAIN_STRATEGY_MAP.set(
+  DomainStrategyTypeDef.FIRST_DOMAIN,
+  FirstDomainStrategy
+);
 
 // 是否在分组中
 let isGrouping = false;
@@ -27,35 +32,37 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   if (!userConfig.enableAutoGroup) {
     return;
   }
-  // 如果 tab 还未加载完，则不执行
-  if (!changeInfo.url) {
-    return;
-  }
 
-  // 如果是新标签页，并且还没有被设置标签组
-  if (
-    tab.url === NEW_TAB_URL &&
-    tab.groupId === chrome.tabGroups.TAB_GROUP_ID_NONE
-  ) {
-    const tabGroups = await chrome.tabGroups.query({
-      title: NEW_TAB_GROUP_TITLE,
-      windowId: chrome.windows.WINDOW_ID_CURRENT,
-    });
+  if (changeInfo.url) {
+    // 如果是新标签页，并且还没有被设置标签组
+    if (
+      tab.url === NEW_TAB_URL &&
+      tab.groupId === chrome.tabGroups.TAB_GROUP_ID_NONE
+    ) {
+      const tabGroups = await chrome.tabGroups.query({
+        title: NEW_TAB_GROUP_TITLE,
+        windowId: chrome.windows.WINDOW_ID_CURRENT,
+      });
 
-    // 如果存在这个标签组
-    if (tabGroups && tabGroups.length) {
-      chrome.tabs.group({ tabIds: tab.id, groupId: tabGroups[0].id });
-    } else {
-      const groupId = await chrome.tabs.group({ tabIds: tab.id });
-      chrome.tabGroups.update(groupId, { title: NEW_TAB_GROUP_TITLE });
+      // 如果存在这个标签组
+      if (tabGroups && tabGroups.length) {
+        chrome.tabs.group({ tabIds: tab.id, groupId: tabGroups[0].id });
+      } else {
+        const groupId = await chrome.tabs.group({ tabIds: tab.id });
+        chrome.tabGroups.update(groupId, { title: NEW_TAB_GROUP_TITLE });
+      }
+
+      return;
     }
 
-    return;
+    // 如果不是新标签页
+    await groupTabs(tab);
   }
 
-  // 如果不是新标签页
-  await groupTabs(tab);
-  // 如果有tab从分组中移除
+  // 如果有tab从分组中移除，则判断group是否害满足条件，如果不满足则ungroup
+  if (changeInfo.groupId && changeInfo.groupId === -1) {
+    await unGroupTab(tab);
+  }
 });
 
 // 将相同的tabs组成一个标签页
@@ -108,17 +115,28 @@ async function groupTabs(tab: TabType) {
   }
 }
 
+async function unGroupTab(tab: TabType) {
+  const strategy = DOMAIN_STRATEGY_MAP.get(userConfig.domainGroupType);
+  if (!strategy) {
+    return;
+  }
+
+  const tabs = await strategy.querySameTabs(tab);
+  const tabIds = tabs.map(t => t.id).filter((t) => !!t) as number[];
+  if (tabs.length > 0 && tabs.length < userConfig.minGroupTabNum) {
+    chrome.tabs.ungroup(tabIds);
+  }
+}
 
 // 监听storage的变化
 chrome.storage.onChanged.addListener((changes, areaName) => {
-  console.log('----------johnhomLogDebug changes', changes)
-  console.log('----------johnhomLogDebug areaName', areaName)
+  console.log('----------johnhomLogDebug changes', changes);
+  console.log('----------johnhomLogDebug areaName', areaName);
 });
 
-
 chrome.runtime.onMessage.addListener((request) => {
-  console.log('----------johnhomLogDebug request', request)
-  
+  console.log('----------johnhomLogDebug request', request);
+
   // if (request.groupRightNow) {
   //   chrome.storage.sync.get(Object.keys(DEFAULT_CONFIG), (config) => {
   //     userConfig = { ...DEFAULT_CONFIG, ...config };
