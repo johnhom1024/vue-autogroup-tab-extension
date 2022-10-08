@@ -2,6 +2,8 @@ const { defineConfig } = require('@vue/cli-service');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+const isProd = process.env.NODE_ENV === 'production';
+
 const copyFiles = [
   {
     from: path.resolve('src/plugins/manifest.json'),
@@ -43,6 +45,14 @@ module.exports = defineConfig({
       filename: 'js/[name].js',
     },
     plugins,
+    devtool: false,
+  },
+  chainWebpack: config => {
+    // 本地环境
+    if (!isProd) {
+      // 如果不是打包生产环境，则不压缩代码
+      config.optimization.minimize(false);
+    }
   },
   // 配置 content.css
   css: {
