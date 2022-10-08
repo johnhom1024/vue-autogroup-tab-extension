@@ -37,7 +37,7 @@ export function getFirstDomain(url: string | undefined | null) {
   }
 
   // 去掉域名中的www和com
-  const noNeed = ['www', 'com', 'cn'];
+  const noNeed = ['www', 'com', 'cn', 'net', 'org', 'hk', 'biz'];
 
   
 
@@ -46,7 +46,7 @@ export function getFirstDomain(url: string | undefined | null) {
   })
 
   if (filterDomain.length) {
-    return filterDomain[0];
+    return filterDomain.slice(-1).join('');
   }
 
   return null;
