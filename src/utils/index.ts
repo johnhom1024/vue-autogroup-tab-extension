@@ -36,14 +36,17 @@ export function getFirstDomain(url: string | undefined | null) {
     return domain;
   }
 
-  // 获取一级域名的前缀部分 例如 google.com => google
-  const firstDomain = domain.split('.');
-  if (firstDomain.length >= 2) {
-    return firstDomain.slice(-2, -1).join('');
-  }
+  // 去掉域名中的www和com
+  const noNeed = ['www', 'com', 'cn'];
 
-  if (firstDomain.length < 2) {
-    return firstDomain.join('');
+  
+
+  const filterDomain = domain.split('.').filter(item => {
+    return !noNeed.includes(item);
+  })
+
+  if (filterDomain.length) {
+    return filterDomain[0];
   }
 
   return null;
