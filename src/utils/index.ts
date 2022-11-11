@@ -30,7 +30,6 @@ export function getFirstDomain(url: string | undefined | null) {
   if (!domain) {
     return null;
   }
-  
   // localhost地址或者IP
   if (domain === 'localhost' || domain.match(/^\d+\.\d+\.\d+\.\d+$/)) {
     return domain;
@@ -39,11 +38,9 @@ export function getFirstDomain(url: string | undefined | null) {
   // 去掉域名中的www和com
   const noNeed = ['www', 'com', 'cn', 'net', 'org', 'hk', 'biz'];
 
-  
-
-  const filterDomain = domain.split('.').filter(item => {
+  const filterDomain = domain.split('.').filter((item) => {
     return !noNeed.includes(item);
-  })
+  });
 
   if (filterDomain.length) {
     return filterDomain.slice(-1).join('');

@@ -30,9 +30,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onBeforeMount,  } from 'vue';
+import { ref, reactive, onBeforeMount } from 'vue';
 // utils
-import { DEFAULT_CONFIG, DomainStrategyTypeDef } from '@/utils/constant';
+import { DEFAULT_CONFIG } from '@/utils/constant';
 import {
   chromeStorageSet,
   chromeStorageGet,
