@@ -1,14 +1,12 @@
 import {
   NEW_TAB_GROUP_TITLE,
-  TabType,
-  TabStatus,
   NEW_TAB_URL,
   DEFAULT_CONFIG,
-  DomainStrategyTypeDef,
 } from '@/utils/constant';
 
 import { DomainGroupStrategy, FirstDomainStrategy } from '@/utils/Strategy';
 import { chromeStorageGet } from '@/utils/index';
+import { DomainStrategyTypeDef, TabType } from 'types/type';
 
 // 定义域名策略的方法
 const DOMAIN_STRATEGY_MAP: Map<
