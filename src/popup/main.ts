@@ -7,6 +7,9 @@ import {
   Divider,
   InputNumber,
   Radio,
+  Slider,
+  Row,
+  Col,
 } from 'ant-design-vue';
 import App from './components/App.vue';
 
@@ -17,6 +20,9 @@ app.use(Button)
   .use(Switch)
   .use(Divider)
   .use(InputNumber)
-  .use(Radio);
+  .use(Radio)
+  .use(Slider)
+  .use(Row)
+  .use(Col);
 
 app.mount('#app');

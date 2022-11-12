@@ -12,10 +12,32 @@
     <div class="p-[10px]">
       <a-form layout="vertical">
         <a-form-item label="每个分组的最小Tab数量：">
-          <a-input-number :value="state.config.minGroupTabNum" @change="onMinGroupTabNumChange"></a-input-number>
+          <a-row>
+            <a-col :span="12">
+              <a-slider
+                :value="state.config.minGroupTabNum"
+                :min="1"
+                :max="10"
+                @change="onMinGroupTabNumChange"
+              ></a-slider>
+            </a-col>
+            <a-col :span="4">
+              <a-input-number
+                class="ml-[20px]"
+                :value="state.config.minGroupTabNum"
+                :min="1"
+                :max="20"
+                @change="onMinGroupTabNumChange"
+              ></a-input-number>
+            </a-col>
+          </a-row>
         </a-form-item>
         <a-form-item label="域名分组策略：">
-          <a-radio-group :value="state.config.domainGroupType" @change="onDomainGroupChange">
+          <a-radio-group
+            :value="state.config.domainGroupType"
+            button-style="solid"
+            @change="onDomainGroupChange"
+          >
             <a-radio-button :value="1">按照域名</a-radio-button>
             <a-radio-button :value="2">按一级域名</a-radio-button>
           </a-radio-group>
@@ -30,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onBeforeMount } from 'vue';
+import { reactive, onBeforeMount } from 'vue';
 // utils
 import { DEFAULT_CONFIG } from '@/utils/constant';
 import {
@@ -58,8 +80,10 @@ function onMinGroupTabNumChange(value: number) {
 
 // 初始化state
 async function initState() {
-  const config = (await chromeStorageGet(Object.keys(DEFAULT_CONFIG))) as ConfigType;
-  state.config = { ...DEFAULT_CONFIG, ...config};
+  const config = (await chromeStorageGet(
+    Object.keys(DEFAULT_CONFIG)
+  )) as ConfigType;
+  state.config = { ...DEFAULT_CONFIG, ...config };
   chromeSendMessage(config);
 }
 
