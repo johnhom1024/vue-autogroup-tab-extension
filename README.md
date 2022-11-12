@@ -1,24 +1,9 @@
 # vue-autogroup-tab-extension
 
-## Project setup
-```
-yarn install
-```
+> 基于 Vue3 + Antd-vue + Typescript + Tailwindcss 开发
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+一个为您的chrome标签页面根据域名自动归类标签组的插件。
 
-### Compiles and minifies for production
-```
-yarn build
-```
+![image](https://github.com/johnhom1024/vue-autogroup-tab-extension/blob/main/example/chromebar.jpg)
 
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+![image](https://github.com/johnhom1024/vue-autogroup-tab-extension/blob/main/example/screenshot.jpg)
