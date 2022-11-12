@@ -11,14 +11,17 @@
     "forceConsistentCasingInFileNames": true,
     "useDefineForClassFields": true,
     "sourceMap": true,
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "types": [
       "webpack-env",
       "chrome"
     ],
     "paths": {
       "@/*": [
-        "src/*"
+        "./*"
+      ],
+      "types/*": [
+        "./types/*"
       ]
     },
     "lib": [
@@ -35,7 +38,7 @@
     "tests/**/*.ts",
     "tests/**/*.tsx",
     "types/**/*.d.ts"
-  ],
+, "types/index.ts", "types/index.ts"  ],
   "exclude": [
     "node_modules",
     "dist"

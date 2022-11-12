@@ -1,4 +1,4 @@
-import { DomainStrategyTypeDef } from "types/type";
+import { DomainStrategyTypeDef } from "@/../types";
 
 // 新标签页的标签组名称
 export const NEW_TAB_GROUP_TITLE = 'newtab';

@@ -1,15 +1,15 @@
+import { TabType } from '@/../types';
 import { getDomain, getFirstDomain } from './index';
-import { TabType } from './constant';
 
 // 抽象的策略类
 abstract class GroupSrategy {
   // 根据传入的tab匹配相同的tab
-  querySameTabs(tab: TabType): Promise<TabType[]> {
+  querySameTabs(_: TabType): Promise<TabType[]> {
     return Promise.resolve([]);
   }
 
   // 根据tab获取标签组名
-  getGroupTitle(tab: TabType): string | null {
+  getGroupTitle(_: TabType): string | null {
     return null;
   }
 }

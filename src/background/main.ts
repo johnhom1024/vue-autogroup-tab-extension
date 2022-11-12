@@ -6,7 +6,7 @@ import {
 
 import { DomainGroupStrategy, FirstDomainStrategy } from '@/utils/Strategy';
 import { chromeStorageGet } from '@/utils/index';
-import { DomainStrategyTypeDef, TabType } from 'types/type';
+import { DomainStrategyTypeDef, TabType } from '@/../types';
 
 // 定义域名策略的方法
 const DOMAIN_STRATEGY_MAP: Map<
