@@ -1051,38 +1051,39 @@
   resolved "https://registry.npmmirror.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@johnhom/eslint-config-basic@0.3.0":
-  version "0.3.0"
-  resolved "https://registry.npmmirror.com/@johnhom/eslint-config-basic/-/eslint-config-basic-0.3.0.tgz#b3f7b108e9ae2365d89fe69b757de25ffd8f9d9d"
-  integrity sha512-Wr3PMzo4sTYqMxRT30MQ6bfoORyWvs2+ahNCwqDXJbUq3yHNuBcQA7QCHw7Xcfa9ANxbhEQzl7xSVOpiltMnUQ==
+"@johnhom/eslint-config-basic@0.3.1":
+  version "0.3.1"
+  resolved "https://registry.npmmirror.com/@johnhom/eslint-config-basic/-/eslint-config-basic-0.3.1.tgz#31bded51069592eaffee55ed6f082f77959beb44"
+  integrity sha512-Gm0tpD7IF+qcqNY7qCNCgnv/Dr8Enh82wfAV65RrZu0AlPMQhWIcmvVLTIWoPMrmgru+8jhyrzHdEVeTmT3jrA==
   dependencies:
     eslint "^8.27.0"
 
-"@johnhom/eslint-config-ts@0.3.0":
-  version "0.3.0"
-  resolved "https://registry.npmmirror.com/@johnhom/eslint-config-ts/-/eslint-config-ts-0.3.0.tgz#0b1c264858946c9910a1e6bbaeb2e599860c513c"
-  integrity sha512-BKGDZsGzK07QtAd4b3INvhl3qKGHTb0cqnk3FxT0Ale6ETQGFBHEX7uqzA9djn787dQT3YZOD4TCA1/Zj7dXhQ==
+"@johnhom/eslint-config-ts@0.3.1":
+  version "0.3.1"
+  resolved "https://registry.npmmirror.com/@johnhom/eslint-config-ts/-/eslint-config-ts-0.3.1.tgz#09293c954d1a29f2d01ded0ed9e4a4db0d87a60c"
+  integrity sha512-fPiW7bhWo+W2/edYRb0rdDC7/yEGoTJhFF/Nz5RaRUcCQ5KShiIS2q0wyRpvFGove/LW/GpmR3Xpq7FKP4op4g==
   dependencies:
-    "@johnhom/eslint-config-basic" "0.3.0"
+    "@johnhom/eslint-config-basic" "0.3.1"
     "@typescript-eslint/eslint-plugin" "^5.42.1"
     "@typescript-eslint/parser" "^5.42.1"
+    typescript "^4.8.4"
 
-"@johnhom/eslint-config-vue@0.3.0":
-  version "0.3.0"
-  resolved "https://registry.npmmirror.com/@johnhom/eslint-config-vue/-/eslint-config-vue-0.3.0.tgz#b68b4094d27fe6bfeec60bf974e0bbb9aa4cfeeb"
-  integrity sha512-5kEQZQ2ilz493H5gaSodW9Ly0fOH3UKu+h8yhzbMfQLJrzydcaSgmoP1TdUXHAm17qcyUqu0PqS33Q9tDcPnNA==
+"@johnhom/eslint-config-vue@0.3.1":
+  version "0.3.1"
+  resolved "https://registry.npmmirror.com/@johnhom/eslint-config-vue/-/eslint-config-vue-0.3.1.tgz#48ebd4ceae6da672b67e692939a77d2b8d4f4d7d"
+  integrity sha512-R80zeNSuIYNY528koNoIZqHerkmToBa4MHYuQYHd4QVmb2vCuC4Pq8ngdllh2m+seF0wPu/9PhkaJACiw4Usew==
   dependencies:
-    "@johnhom/eslint-config-ts" "0.3.0"
+    "@johnhom/eslint-config-ts" "0.3.1"
     "@vue/eslint-config-typescript" "^11.0.2"
     eslint-plugin-vue "^9.7.0"
     vue-eslint-parser "^9.1.0"
 
-"@johnhom/eslint-config@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.npmmirror.com/@johnhom/eslint-config/-/eslint-config-0.3.0.tgz#e491bc2056395bcff2018d7100704ced30cfc769"
-  integrity sha512-8iIdTb1LusqcYkSJ9+Tl6W0RMMCu42YUAIXi5OnoKTWQ3tbds4luBJ6AjPbceT+gMs7tQkSNpCYRSyzjpw9fIQ==
+"@johnhom/eslint-config@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.npmmirror.com/@johnhom/eslint-config/-/eslint-config-0.3.1.tgz#407face127a1c223cfce14250f13072c809e49f7"
+  integrity sha512-JDlFUVZ/KSTfRZMWcm+eR6qy8k4yoIoIVUXVdW5QrYIxW6L2xu8pruVZ42yvj8EIZiz2hb0QKu3RuJep2DAivg==
   dependencies:
-    "@johnhom/eslint-config-vue" "0.3.0"
+    "@johnhom/eslint-config-vue" "0.3.1"
 
 "@jridgewell/gen-mapping@^0.1.0":
   version "0.1.1"
@@ -6473,6 +6474,11 @@ type-is@~1.6.18:
   dependencies:
     media-typer "0.3.0"
     mime-types "~2.1.24"
+
+typescript@^4.8.4:
+  version "4.9.5"
+  resolved "https://registry.npmmirror.com/typescript/-/typescript-4.9.5.tgz#095979f9bcc0d09da324d58d03ce8f8374cbe65a"
+  integrity sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==
 
 typescript@~4.5.5:
   version "4.5.5"
