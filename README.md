@@ -28,7 +28,7 @@
 
 在chrome的顶部，把这个插件置顶：
 
-<img src="https://github.com/johnhom1024/vue-autogroup-tab-extension/blob/main/example/load-success.jpg" width="500px" />
+<img src="https://github.com/johnhom1024/vue-autogroup-tab-extension/blob/main/example/topping.jpg" width="500px" />
 
 最后开启这个标签自动分组的开关：
 
