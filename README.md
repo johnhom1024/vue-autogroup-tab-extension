@@ -6,7 +6,7 @@
 
 ![image](https://github.com/johnhom1024/vue-autogroup-tab-extension/blob/main/example/chromebar.jpg)
 
-<img src="https://github.com/johnhom1024/vue-autogroup-tab-extension/blob/main/example/screenshot.jpg" style="zoom: 50%" />
+<img src="https://github.com/johnhom1024/vue-autogroup-tab-extension/blob/main/example/screenshot.jpg" width="300px" />
 
 ## 安装到chrome浏览器上
 
